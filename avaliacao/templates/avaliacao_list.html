@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <!-- Verifica se o usuário está autenticado -->
+  {% if user.is_authenticated %}
+    <!-- Verifica se o usuário não é empresa nem superusuário -->
+    {% if not user.is_staff and not user.is_superuser %}
+      <!-- Título da página -->
+      <h1>{{ title }}</h1>
+
+      <div class="container mt-4">
+        <h1>Avaliações</h1>
+        <a href="{% url 'avaliacao:avaliacao-create' %}" class="btn btn-primary mb-2">Adicionar Avaliação</a>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Empresa</th>
+              <th>Nota</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for avaliacao in object_list %}
+              <tr>
+                <td>{{ avaliacao.id }}</td>
+                <td>{{ avaliacao.empresa.nome }}</td>
+                <td>{{ avaliacao.nota }}</td>
+                <td>
+                  <a href="{% url 'avaliacao:avaliacao-detail' avaliacao.id %}" class="btn btn-info">Detalhes</a>
+                  <a href="{% url 'avaliacao:avaliacao-update' avaliacao.id %}" class="btn btn-warning">Editar</a>
+                  <a href="{% url 'avaliacao:avaliacao-delete' avaliacao.id %}" class="btn btn-danger">Deletar</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock main %}

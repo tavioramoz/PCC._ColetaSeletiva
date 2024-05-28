@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container mt-4">
+  <h1>Deletar Avaliação</h1>
+  <p>Tem certeza de que deseja deletar a avaliação da empresa {{ avaliacao.empresa.nome }} com a nota {{ avaliacao.nota }}?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Deletar</button>
+    <a href="{% url 'avaliacao:avaliacao-list' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}
